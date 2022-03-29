@@ -1,0 +1,11 @@
+source ~/.gustom/rcadds
+
+pretty_branch_name () {
+    echo "$(parse_git_branch)"
+}
+
+export PS1="\[\033[1;36m\]\u\[\033[1;36m\]@\[\033[1;36m\]\h \[\033[0;32m\]\W\[\033[0;33m\]\$(pretty_branch_name)\[\033[0;37m\] $ "
+
+gc () {
+    git commit -m "$@"
+}
