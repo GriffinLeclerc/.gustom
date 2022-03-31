@@ -1,22 +1,31 @@
 source ~/.gustom/rcadds
 
-pretty_branch_name () {
+ps1_branch_name () {
     python3 ~/.gustom/parse_branch.py $(parse_git_branch)
 }
 
-export PS1="\[\033[1;36m\]\u\[\033[1;36m\]@\[\033[1;36m\]\h \[\033[0;32m\]\W\[\033[0;33m\]\$(pretty_branch_name)\[\033[0;37m\] $ "
+new_ps1 () {
+    # [A-z0-9]*-[0-9]*-
+    echo \"$(cat "$@")\"
+}
+
+clean_branch_name () {
+    $(ps1_branch_name | xargs)
+}
+
+export PS1="\[\033[1;36m\]\u\[\033[1;36m\]@\[\033[1;36m\]\h \[\033[0;32m\]\W\[\033[0;33m\]\$(ps1_branch_name)\[\033[0;37m\] $ "
 
 # git commit function
 gc(){
-    git commit -m "$(pretty_branch_name | xargs) $@"
+    git commit -m "$(clean_branch_name) $@"
 }
 
 gecho(){
-    echo "$(pretty_branch_name | xargs) $@"
+    echo "$(clean_branch_name) $@"
 }
 
 jira () {
-    firefox "https://jira.iol.unh.edu/browse/$(pretty_branch_name | xargs)"
+    firefox "https://unh-iol.atlassian.net/browse/$(clean_branch_name)"
 }
 
 alias ntsc="ssh iol@132.177.116.25"
