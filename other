@@ -23,3 +23,14 @@ echo "x0vncserver -passwordfile ~/.vnc/passwd -display :0 >/dev/null 2>&1 &" >> 
 Sudoers:
 griffin ALL=(ALL) NOPASSWD: ALL
 # as the LAST LINE
+
+
+Alt-Tab between windows:
+1. Open Settings from left panel or application menu.
+
+When it opens, navigate to Devices -> Keyboard.
+
+2. Scroll down and find out the line “Switch windows“, then click and set its keyboard shortcut to Alt+Tab.
+
+Change Java versions:
+sudo update-alternatives --config java
