@@ -39,3 +39,5 @@ Isolate workspaces:
 gsettings set org.gnome.shell.extensions.dash-to-dock isolate-workspaces true
 
 
+No Alt Firefox:
+You can set the ui.key.menuAccessKeyFocuses pref to false on the about:config page to prevent opening the menu when holding down the Alt key.

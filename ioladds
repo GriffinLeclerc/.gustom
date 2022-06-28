@@ -5,13 +5,31 @@ py_ps1_branch_name () {
 }
 
 ps1_branch_name () {
-    # Ticket number: [A-Z]*-[0-9]*
-    # Replace [a-z]*/ with "" (like "feature/" or "bugfix/")
-    # Replace -[a-z]+ with "" (like "-fix" and "-this", this replaces all Jira added words)
-    # A trailing whitespace is added to this as well for proper PS1 spacing
-    echo "$(parse_git_branch) " 2> /dev/null | sed -E -e "s/[a-z]*\///g" -e "s/-[a-z]+//g"
+    projectKeys=("AVNU" "VIOL")
+    isTicketBranch=false
+
+    # For each project, if its key is in the branch name, then this is a ticket branch
+    for SUB in "${projectKeys[@]}"
+    do 
+        if [[ "$(parse_git_branch)" == *"$SUB"* ]]; then
+            isTicketBranch=true
+        fi
+    done
+
+    # if this is a ticket branch, then remove uneeded things
+    if [ $isTicketBranch = true ]; then
+        # Ticket number: [A-Z]*-[0-9]*
+        # Replace [a-z]*/ with "" (like "feature/" or "bugfix/")
+        # Replace -[a-z]+ with "" (like "-fix" and "-this", this replaces all Jira added words)
+        # A trailing whitespace is added to this as well for proper PS1 spacing
+        echo "$(parse_git_branch) " 2> /dev/null | sed -E -e "s/[a-z]*\///g" -e "s/-[a-z]+//g" -e "s/-[0-9]+//2g"
+    else
+        echo "$(parse_git_branch) "
+    fi
+    
 }
 
+# remove the trailing whitespace from ps1_branch_name
 clean_branch_name () {
     echo $(ps1_branch_name | xargs)
 }
