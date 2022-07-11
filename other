@@ -41,3 +41,15 @@ gsettings set org.gnome.shell.extensions.dash-to-dock isolate-workspaces true
 
 No Alt Firefox:
 You can set the ui.key.menuAccessKeyFocuses pref to false on the about:config page to prevent opening the menu when holding down the Alt key.
+
+ubnutu clock:
+gsettings set org.gnome.desktop.interface clock-format 12h
+gsettings set org.gnome.desktop.interface clock-show-seconds true
+
+Ubuntu 18.04 window order:
+/usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com/windowPreview.js
+put file from res here
+
+Add iol.unh.edu to queries:
+put `search iol.unh.edu` at the end of `/etc/resolvconf/resolv.conf.d/base`
+
