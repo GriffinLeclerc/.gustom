@@ -14,6 +14,8 @@ BACKSPACE="guess
 end
 
 
+sudo apt install openssh-server
+
 VNC:
 sudo apt-get install tigervnc-scraping-server
 vncpasswd
@@ -52,4 +54,45 @@ put file from res here
 
 Add iol.unh.edu to queries:
 put `search iol.unh.edu` at the end of `/etc/resolvconf/resolv.conf.d/base`
+
+Change both monitors when changing workspace:
+Gnome-twaks: Go to Workspaces and set Display handling to Workspaces span displays. Done!
+
+Keyboard shortcuts:
+$ dconf dump /org/gnome/desktop/wm/keybindings/
+[/]
+switch-windows=['<Alt>Tab']
+switch-applications=@as []
+switch-applications-backward=@as []
+switch-windows-backward=['<Shift><Alt>Tab']
+
+$ dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/  # Custom
+[custom2]
+binding='F7'
+command='xdotool key --delay 0 XF86AudioPlay'
+name='Play/Pause'
+
+[custom1]
+binding='<Alt>p'
+command='firefox -p Personal'
+name='Personal'
+
+[custom4]
+binding='F6'
+command='xdotool key --delay 0 XF86AudioPrev'
+name='Prev'
+
+[custom0]
+binding='<Alt>s'
+command='gnome-screenshot -a -c'
+name='Screencap'
+
+[custom3]
+binding='F8'
+command='xdotool key --delay 0 XF86AudioNext'
+name='Next'
+
+
+
+
 
