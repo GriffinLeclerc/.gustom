@@ -53,8 +53,6 @@ up() {
     sudo apt update
     echo "Upgrading"
     sudo apt -y upgrade
-    echo "Autoremoving"
-    sudo apt -y autoremove
 }
 
 alias starwars="telnet towel.blinkenlights.nl"
@@ -109,3 +107,5 @@ alias hpc5="ssh hpc@hpc5.cs.unh.edu"
 alias hpc6="ssh hpc@hpc6.cs.unh.edu"
 
 alias pub="cat ~/.ssh/id_rsa.pub"
+
+alias xsh="chmod +x *.sh"
