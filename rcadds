@@ -55,6 +55,7 @@ up() {
     sudo apt -y upgrade
 }
 
+# play ascii star wars
 alias starwars="telnet towel.blinkenlights.nl"
 
 # color manpages
@@ -76,8 +77,6 @@ gs () {
     git status
 }
 
-alias ins="git pull upstream instructor"
-
 # git commit function
 gc(){
     git commit -m "$@"|xargs
@@ -92,6 +91,7 @@ alias python="python3"
 alias pip="pip3"
 alias p="python3"
 
+# use pyhton completion with `p`
 _completion_loader python
 complete -o bashdefault -o default -o nospace -F _python p
 
@@ -106,6 +106,14 @@ alias hpc4="ssh hpc@hpc4.cs.unh.edu"
 alias hpc5="ssh hpc@hpc5.cs.unh.edu"
 alias hpc6="ssh hpc@hpc6.cs.unh.edu"
 
-alias pub="cat ~/.ssh/id_rsa.pub"
+# use `$ <> | clip` to pipe the output of <> into the clipboard
+alias clip="xclip -selection c"
 
+# easily retreive default public key
+pub () {
+    cat ~/.ssh/id_rsa.pub
+    cat ~/.ssh/id_rsa.pub | clip
+}
+
+# make *.sh executable in current dir
 alias xsh="chmod +x *.sh"
