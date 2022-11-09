@@ -117,3 +117,11 @@ pub () {
 
 # make *.sh executable in current dir
 alias xsh="chmod +x *.sh"
+
+# old habits die hard
+alias ifconfig="ip a"
+
+ipv4 () {
+# my v4 addrs = get my ip a info | grep "inet " | any numeric string separated by 3 .'s | without any numeric string ending in 255 (to remove the gateway addresses) | without the loopback interface
+echo "$(ip a | grep "inet " | grep "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" -o  | grep -v "[0-9]*\.[0-9]*\.[0-9]*\.255" | grep -v "127\.0\.0\.1")"
+}
