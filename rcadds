@@ -1,7 +1,8 @@
 
 # Parse git branch
 parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/' ;
+    # | to xargs to remove leading whitespace
+    (git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/';) | xargs
 }
 
 main_color=96m
@@ -122,6 +123,11 @@ alias xsh="chmod +x *.sh"
 alias ifconfig="ip a"
 
 ipv4 () {
-# my v4 addrs = get my ip a info | grep "inet " | any numeric string separated by 3 .'s | without any numeric string ending in 255 (to remove the gateway addresses) | without the loopback interface
-echo "$(ip a | grep "inet " | grep "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" -o  | grep -v "[0-9]*\.[0-9]*\.[0-9]*\.255" | grep -v "127\.0\.0\.1")"
+    # my v4 addrs = get my ip a info | grep "inet " | any numeric string separated by 3 .'s | without any numeric string ending in 255 (to remove the gateway addresses) | without the loopback interface
+    echo "$(ip -4 a | grep "inet " | grep "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" -o  | grep -v "[0-9]*\.[0-9]*\.[0-9]*\.255" | grep -v "127\.0\.0\.1")"
+}
+
+ipv6 () {
+    # my v4 addrs = get my ip a info | grep "inet " | any numeric string separated by 3 .'s | without any numeric string ending in 255 (to remove the gateway addresses) | without the loopback interface
+    echo "$(ip -6 a | grep "inet6 " | grep "[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*" -o)"
 }
