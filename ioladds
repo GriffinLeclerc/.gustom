@@ -33,13 +33,13 @@ ticket_name () {
 # add whitespace to ticket_name for PS1
 ps1_branch_name () {
     if [[ $(parse_git_branch) == "" ]]; then
-        echo " "
+        echo ""
     else
-        echo " $(ticket_name) "
+        echo " $(ticket_name)"
     fi
 }
 
-export PS1="\[\033[1;$main_color\]\u\[\033[1;$main_color\]@\[\033[1;$main_color\]\h \[\033[0;$dir_color\]\W\[\033[0;$git_color\]\$(ps1_branch_name)\[\033[0;37m\]$ "
+export PS1="\[\033[1;$main_color\]\u\[\033[1;$main_color\]@\[\033[1;$main_color\]\h \[\033[0;$dir_color\]\W\[\033[0;$git_color\]\$(ps1_branch_name)\[\033[0;37m\] $ "
 
 # git commit function
 gc(){
