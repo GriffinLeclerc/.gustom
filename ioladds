@@ -1,9 +1,5 @@
 source ~/.gustom/rcadds
 
-py_ps1_branch_name () {
-    python3 ~/.gustom/parse_branch.py $(parse_git_branch)
-}
-
 ticket_name () {
     projectKeys=("AVNU" "VIOL" "APL")
     isTicketBranch=false
@@ -20,17 +16,15 @@ ticket_name () {
     # if this is a ticket branch, then remove uneeded things
     if [ $isTicketBranch = true ]; then
         # Ticket number: [A-Z]*-[0-9]*
-        # Replace [a-z]*/ with "" (like "feature/" or "bugfix/")
-        # Replace -[a-z]+ with "" (like "-fix" and "-this", this replaces all Jira added words)
-        # Replace .[a-z0-9]+ with "" (in case someone references a test number like 1.1a or bridge.io)
-        echo "$(parse_git_branch)" 2> /dev/null | sed -E -e "s/[a-z]*\///g" -e "s/-[a-z]+//g" -e "s/-[0-9]+//2g" -e "s/\.[a-z0-9]+//g"
+        # Replace [a-z]*/ with "" (like "feature/", "bugfix/", or "/")
+        # Replace everything after the second hypthen with ""
+        echo "$(parse_git_branch)" 2> /dev/null | sed -E -e "s/[a-z]*\///g" -e "s/-[^-]*//2g"
     else
         echo "$(parse_git_branch)"
     fi
-    
 }
 
-# add whitespace to ticket_name for PS1
+# add whitespace to ticket_name for even PS1 spacing
 ps1_branch_name () {
     if [[ $(parse_git_branch) == "" ]]; then
         echo ""
@@ -46,13 +40,70 @@ gc(){
     git commit -m "$(ticket_name) $@"
 }
 
+# debug function to see how gc() commit messages will be applied
 gecho(){
     echo \""$(ticket_name) $@"\"
 }
 
+# open the jira ticket associated with the current branch
 jira () {
-    firefox "https://unh-iol.atlassian.net/browse/$(ticket_name)"
+    firefox -P default-release "https://unh-iol.atlassian.net/browse/$(ticket_name)" &
 }
 
 alias ntsc="ssh iol@132.177.116.25"
 alias ntss="ssh iol@132.177.116.174"
+
+# You will want to fix the paths in here to point to your java installations.
+# Then, save this file (or add it to the bottom, if you already have one) as ~/.bashrc
+# After doing that, in newly-opened terminals, you can switch between java by running
+# $ java-version <version>
+# where <version> is 8 or 17 as configured below
+
+java-version(){
+  if [[ -z "$1" ]]; then
+   update-alternatives --list java
+   java -version
+  else
+    case "$1" in
+      11)
+        sudo update-java-alternatives --set java-1.11.0-openjdk-amd64
+        sudo update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+        JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+        export JAVA_HOME
+        ;;
+      13)
+        sudo update-java-alternatives --set java-1.13.0-openjdk-amd64
+        sudo update-alternatives --set java /usr/lib/jvm/java-13-openjdk-amd64/bin/java
+        JAVA_HOME=/usr/lib/jvm/java-13-openjdk-amd64
+        export JAVA_HOME
+        ;;
+      14)
+        sudo update-java-alternatives --set java-1.14.0-openjdk-amd64
+        sudo update-alternatives --set java /usr/lib/jvm/java-14-openjdk-amd64/bin/java
+        JAVA_HOME=/usr/lib/jvm/java-14-openjdk-amd64
+        export JAVA_HOME
+        ;;
+      17)
+        sudo update-java-alternatives --set java-1.17.0-openjdk-amd64
+        sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+        JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+        export JAVA_HOME
+        ;;
+      16)
+        sudo update-java-alternatives --set java-1.16.0-openjdk-amd64
+        sudo update-alternatives --set java /usr/lib/jvm/java-16-openjdk-amd64/bin/java
+        JAVA_HOME=/usr/lib/jvm/java-16-openjdk-amd64
+        export JAVA_HOME
+        ;;
+       8)
+        sudo update-java-alternatives --set java-1.8.0-openjdk-amd64
+        sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+        JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+        export JAVA_HOME
+        ;;
+      *)
+        echo "No matching java version - run java-version to see available javas"
+        ;;
+    esac
+  fi
+}
