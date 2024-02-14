@@ -141,3 +141,6 @@ ipv6 () {
     # my v4 addrs = get my ip a info | grep "inet " | any numeric string separated by 3 .'s | without any numeric string ending in 255 (to remove the gateway addresses) | without the loopback interface
     echo "$(ip -6 a | grep "inet6 " | grep "[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*:[a-z0-9]*" -o)"
 }
+
+alias model="sudo dmidecode | grep -A3 '^System Information'"
+
