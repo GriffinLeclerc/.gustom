@@ -50,9 +50,6 @@ jira () {
     firefox -P default-release "https://unh-iol.atlassian.net/browse/$(ticket_name)" &
 }
 
-alias ntsc="ssh iol@132.177.116.25"
-alias ntss="ssh iol@132.177.116.174"
-
 # You will want to fix the paths in here to point to your java installations.
 # Then, save this file (or add it to the bottom, if you already have one) as ~/.bashrc
 # After doing that, in newly-opened terminals, you can switch between java by running
